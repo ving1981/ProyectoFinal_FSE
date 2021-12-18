@@ -32,7 +32,7 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 
 # Nombre o dirección IP del sistema anfitrión del servidor web
 # address = "localhost"
-address = "192.168.100.121"
+address = "192.168.1.80"
 # Puerto en el cual el servidor estará atendiendo solicitudes HTTP
 # El default de un servidor web en produción debe ser 80
 port = 8080
