@@ -1,0 +1,796 @@
+
+<!-- Autores:   Marín Jiménez Irving
+						Salas Garcia Alejandra-->
+<!DOCTYPE html>
+<html lang="es">
+<link rel="shortcut icon" href="#">
+	<head>
+		
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<title> Invernadero </title>
+		
+		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+		<style>
+			*{
+				margin: 0;
+				box-sizing: border-box;
+			}
+			body{
+				font-family: sans-serif;
+				padding: 90px 20px 0;
+			}
+			/*Cabecera principal*/
+			.header{ 
+				background-color: #008000; /*Fondo color verde*/
+				height: 80px;
+				position: fixed; /*Posicion fija*/
+				width: 100%;
+				top: 0;
+				left: 0; 
+			}
+			/*Contenido de la barra*/
+			.container{ 
+				display: flex;
+				justify-content: space-between; /*Espacio entre "Invernadero" y "Control"*/
+				max-width: 992px;
+				margin: 0 auto; /*Se centran palabras*/
+			}
+
+			/*Palabra Invernadero*/
+			.logo{
+				font-size: 30px;
+				font-weight: bold;
+				padding: 0 20px;
+				line-height: 80px;
+				color: white;
+				text-decoration: none;
+			}
+
+			.nav{
+				display: flex;
+				margin-left: 40px;
+				list-style: none;
+			}
+
+			.nav-menu{
+				font-size: 18px;
+				margin: 0 10px;
+				line-height: 80px;
+				text-transform: uppercase;
+				width: max-content;
+			}
+
+			/*Palabra Control*/
+			.nav-menu-item{
+				padding: 8px 8px;
+				border-radius: 3px;
+				color: white;
+				text-decoration: none;
+			}
+			/*Sombreado de Control*/
+			.nav-menu-item:hover{
+				background-color: #006400;
+				transition: 0.5s;
+			}
+					
+			.main{		
+				padding-top: 40px;
+			}
+
+			.contenido{
+				display: grid;
+				grid-template-columns: 50% 50%;
+				gap: 1em;
+					
+			}
+
+			.contenido div{
+				background-color: #BFBFBF;
+				padding: 1em;
+			}
+
+			.contenido textarea{
+				width: 100%;
+				height: 100%;
+			}
+
+			.h1{
+				text-align: center;
+				font-size: 20px;
+				font-weight: bold;
+				line-height: 80px;
+				color: white;
+				text-decoration: none;
+			}
+
+			.h2{
+				text-align: center;
+				font-size: 20px;
+				font-weight: bold;
+				line-height: 80px;
+				color: white;
+				text-decoration: none;
+			}
+
+			.boton{
+				font-size: 15px;
+				text-align: center;
+				padding: 10px 10px;
+				width: 70px;				
+				border: 1px solid;
+				border-radius: 12px;
+				transition-duration: 0.3s;
+					
+			}
+			.boton:hover{
+				background-color: #7C7E7C;
+			}	
+
+			.slide-control{
+				width: 100%;
+
+			}
+			.slider{
+				width: 100%;
+				border-radius: 12px;
+			}
+			.slider: hover{
+				opacity: 1;
+			}
+						
+			.p{
+				font-size: 20px;
+				font-weight: bold;
+				margin-top: 50px;
+				opacity: 0.7;
+				color: white;
+			}
+
+			.cicloIN{
+				height: 30%;
+				width: 30%;
+			}
+
+			.irrigacion{
+				min-width: 25%;
+			}
+			.irrigacion img{
+				height: 40%;
+				width: 40%;
+				display: block;
+				margin: 0 auto;
+				border-radius: 12px;
+			}
+
+			.temperatura{
+				min-width: 50%;
+			}
+			.temperatura img{
+				height: 40%;
+				width: 40%;
+				display: block;
+				margin: 0 auto;
+				border-radius: 12px;
+			}
+
+			.radiador{
+				min-width: 50%;
+			}
+			.radiador img{
+				height: 40%;
+				width: 40%;
+				display: block;
+				margin: 0 auto;
+				border-radius: 12px;
+			}
+
+			.ventilador{
+				min-width: 50%;
+			}
+			.ventilador img{
+				height: 40%;
+				width: 40%;
+				display: block;
+				margin: 0 auto;
+				border-radius: 12px;
+			}
+
+		</style>
+
+	</head>
+	<body>
+		<header class="header">
+        	<div class="container"> 
+        		<a href="#" class="logo">Invernadero</a>
+        		<ul class="nav"> 
+        			<li class="nav-menu">
+        				<a href="#" class="nav-menu-item">Control</a>
+        			</li>
+        		</ul>
+        	</div>
+    	</header>
+    	<div class="contenido">
+    		<div>
+    			<h1 class="h1">Irrigacion</h1>
+    			<center>
+    				<div class="irrigacion">
+    					<img  id = "cambiarIrrigacion" src="imagesUserInterface/irrigacionOFF.jpg">	
+    				</div>
+    				
+					<button id="botonON" class="boton botonOONN" onclick="enviaDatos('ONOFFIrrig','ON','IRRIGACION')">ON</button>
+					<button id="botonOFF" class="boton botonOOFF" onclick="enviaDatos('ONOFFIrrig','OFF','IRRIGACION')">OFF</button>
+    			</center>
+    		</div>
+    		<div>
+    			<h1 class="h1">Temperatura</h1>
+    			<center>
+    				<div class="temperatura">
+    					<img  id = "cambiarTemperatura" src="imagesUserInterface/temperaturaN.jpg">	
+    				</div>
+    			</center>
+    			
+    			
+    			<div class="slide-control">
+                   	<input type="range" min="0" max="100" value="0" id="temp_input" class="slider">
+                   	<center>
+                   		<p class="p">Valor: <span id="value_temp"></span> &deg;C</p>
+                   		<button id="botonTemp" class="boton botonTempe" onclick="enviaDatos('TEMP',document.getElementById('temp_input').value,'TEMPERATURA')">OK</button>
+                   	</center>
+                   	
+                </div>
+    				
+    		</div>
+    		<div>
+    			<h1 class="h1">Potencia de Radiador</h1>
+    			<div class="radiador">
+    				<img  id = "cambiarRadiador" src="imagesUserInterface/foco0.jpg">	
+    			</div>
+ 
+    			<div class="slide-control">
+                   	<input type="range" min="0" max="100" value="0" id="radiador_input" class="slider">
+                   	<center>
+                   		<p class="p">Valor: <span id="value_radiador"></span> %</p>
+                		<button id="botonRad" class="boton botonRadia" onclick="enviaDatos('RAD',document.getElementById('radiador_input').value,'RADIADOR')">OK</button>
+                   	</center>
+                	
+                </div>
+    			
+    		</div>
+    		<div>
+    			<h1 class="h1">Velocidad del Ventilador</h1>
+    			<div class="ventilador">
+    				<img  id = "cambiarVentilador" src="imagesUserInterface/ventiladorOFF.jpg">	
+    			</div>
+
+    			<div class="slide-control">
+                   	<input type="range" min="0" max="100" value="0" id="ventilador_input" class="slider">
+                   	<center>
+                   		<p class="p">Valor: <span id="value_ventilador"></span> %</p>
+                   		<button id="botonVent" class="boton botonVentila" onclick="enviaDatos('VENT',document.getElementById('ventilador_input').value,'VENTILADOR')">OK</button>
+                   	</center>
+                    	
+                </div>
+    			
+    		</div>
+    		<div>
+    			<h1 class="h1">Ciclos</h1>
+    			<center>
+    				<input  class="cicloIN" type="number" id="ciclosNum">
+    				<p class="p">Cada ciclo dura 2 minutos <p>
+    				<button class="boton" onclick="cuentaReg()">INICIAR</button>
+    			</center>
+        		<h2 class="h2" id="reloj">00:00</h2>
+    			
+    		</div>
+    		<div>
+    		
+    			<textarea id= "historialArea"></textarea>
+    		    			
+    		</div>
+
+    		<div>
+    			<h1 class="h1">Gr&aacute;fica Irrigacion</h1>
+    			<center>
+    				<canvas id="grafica_irrigacion"></canvas>
+    			</center>
+    			
+    		</div>
+
+    		<div>
+    			<h1 class="h1">Gr&aacute;fica Temperatura</h1>
+    			<center>
+    				<canvas id="grafica_temperatura"></canvas>
+    			</center>
+    			
+    		</div>
+
+    		<div>
+    			<h1 class="h1">Gr&aacute;fica Radiador</h1>
+    			<center>
+    				<canvas id="grafica_radiador"></canvas>
+    			</center>
+   
+    		</div>
+
+    		<div>
+    			<h1 class="h1">Gr&aacute;fica Ventilador</h1>
+    			<center>
+    				<canvas id="grafica_ventilador"></canvas>
+    			</center>
+   
+    		</div>
+
+    		
+    		
+    	</div>
+	</body>
+
+</html>>
+
+<script language="javascript">
+	<!--
+		var apagarIrrTem = new Boolean(false);
+
+	//Boton Irrigacion-------------------------------------------------------------
+	
+
+	const $cambiarIrrigacion = document.getElementById("cambiarIrrigacion"),
+		  $botonOONN = document.querySelector(".botonOONN"),
+		  $botonOOFF = document.querySelector(".botonOOFF");
+
+	function cambiarIRRIGACION1(){
+		if ($cambiarIrrigacion.src.match("imagesUserInterface/irrigacionOFF.jpg")){
+			$cambiarIrrigacion.src = "imagesUserInterface/irrigacionON.jpg"
+		}
+	}
+
+	function cambiarIRRIGACION2(){
+		if ($cambiarIrrigacion.src.match("imagesUserInterface/irrigacionON.jpg")){
+			$cambiarIrrigacion.src = "imagesUserInterface/irrigacionOFF.jpg"
+		}
+	}
+
+	$botonOONN.addEventListener("click",cambiarIRRIGACION1)
+	$botonOOFF.addEventListener("click",cambiarIRRIGACION2)
+
+
+	
+	//Maniplacion del slider de temperatura-----------------------------------------
+	var sliderTemp = document.getElementById("temp_input");
+	var outputTemp = document.getElementById("value_temp");
+
+	outputTemp.innerHTML = sliderTemp.value;
+
+	sliderTemp.oninput = function temp(){
+		outputTemp.innerHTML = this.value;
+	}
+
+	//Boton Temperatura-----------------------------------------------------------
+	const $cambiarTemperatura = document.getElementById("cambiarTemperatura"),
+		  $botonTempe = document.querySelector(".botonTempe");
+		 
+	function cambiarTEMPERATURA1(){
+		if ($cambiarTemperatura.src.match("imagesUserInterface/temperaturaN.jpg") && sliderTemp.value <15){
+			$cambiarTemperatura.src = "imagesUserInterface/temperaturaB.jpg"
+		}else if ($cambiarTemperatura.src.match("imagesUserInterface/temperaturaN.jpg") && sliderTemp.value >25){
+			$cambiarTemperatura.src = "imagesUserInterface/temperaturaA.jpg"
+		}else if ($cambiarTemperatura.src.match("imagesUserInterface/temperaturaN.jpg") && sliderTemp.value >=15 && sliderTemp.value <=25){
+			$cambiarTemperatura.src = "imagesUserInterface/temperaturaN.jpg"
+		}else if ($cambiarTemperatura.src.match("imagesUserInterface/temperaturaB.jpg") && sliderTemp.value >=15 && sliderTemp.value <=25){
+			$cambiarTemperatura.src = "imagesUserInterface/temperaturaN.jpg"
+		}else if ($cambiarTemperatura.src.match("imagesUserInterface/temperaturaB.jpg") && sliderTemp.value >25){
+			$cambiarTemperatura.src = "imagesUserInterface/temperaturaA.jpg"
+		}else if ($cambiarTemperatura.src.match("imagesUserInterface/temperaturaA.jpg") && sliderTemp.value <15){
+			$cambiarTemperatura.src = "imagesUserInterface/temperaturaB.jpg"
+		}else if ($cambiarTemperatura.src.match("imagesUserInterface/temperaturaA.jpg") && sliderTemp.value >=15 && sliderTemp.value <=25){
+			$cambiarTemperatura.src = "imagesUserInterface/temperaturaN.jpg"
+		}else if ($cambiarTemperatura.src.match("imagesUserInterface/temperaturaA.jpg") && sliderTemp.value >25){
+			$cambiarTemperatura.src = "imagesUserInterface/temperaturaA.jpg"
+		}
+	}
+	$botonTempe.addEventListener("click",cambiarTEMPERATURA1)
+
+
+
+	//Maniplacion del slider del radiador------------------------------------------
+	var sliderRad = document.getElementById("radiador_input");
+	var outputRad = document.getElementById("value_radiador");
+
+	outputRad.innerHTML = sliderRad.value;
+
+	sliderRad.oninput = function temp(){
+		outputRad.innerHTML = this.value;
+	}
+
+	//Boton Radiador-----------------------------------------------------------
+	const $cambiarRadiador = document.getElementById("cambiarRadiador"),
+		  $botonRadia = document.querySelector(".botonRadia");
+		 
+	function cambiarRADIADOR1(){
+		if ($cambiarRadiador.src.match("imagesUserInterface/foco0.jpg") && sliderRad.value ==0){
+			$cambiarRadiador.src = "imagesUserInterface/foco0.jpg"
+		}else if ($cambiarRadiador.src.match("imagesUserInterface/foco0.jpg") && sliderRad.value >0 && sliderRad.value <=25){
+			$cambiarRadiador.src = "imagesUserInterface/foco25.jpg"
+		}else if ($cambiarRadiador.src.match("imagesUserInterface/foco0.jpg") && sliderRad.value >25 && sliderRad.value <=50){
+			$cambiarRadiador.src = "imagesUserInterface/foco50.jpg"
+		}else if ($cambiarRadiador.src.match("imagesUserInterface/foco0.jpg") && sliderRad.value >50 && sliderRad.value <=75){
+			$cambiarRadiador.src = "imagesUserInterface/foco75.jpg"
+		}else if ($cambiarRadiador.src.match("imagesUserInterface/foco0.jpg") && sliderRad.value >75 && sliderRad.value <=100){
+			$cambiarRadiador.src = "imagesUserInterface/foco100.jpg"
+		}else if ($cambiarRadiador.src.match("imagesUserInterface/foco25.jpg") && sliderRad.value >0 && sliderRad.value <=25){
+			$cambiarRadiador.src = "imagesUserInterface/foco25.jpg"
+		}else if ($cambiarRadiador.src.match("imagesUserInterface/foco25.jpg") && sliderRad.value ==0){
+			$cambiarRadiador.src = "imagesUserInterface/foco0.jpg"
+		}else if ($cambiarRadiador.src.match("imagesUserInterface/foco25.jpg") && sliderRad.value >25 && sliderRad.value <=50){
+			$cambiarRadiador.src = "imagesUserInterface/foco50.jpg"
+		}else if ($cambiarRadiador.src.match("imagesUserInterface/foco25.jpg") && sliderRad.value >50 && sliderRad.value <=75){
+			$cambiarRadiador.src = "imagesUserInterface/foco75.jpg"
+		}else if ($cambiarRadiador.src.match("imagesUserInterface/foco25.jpg") && sliderRad.value >75 && sliderRad.value <=100){
+			$cambiarRadiador.src = "imagesUserInterface/foco100.jpg"
+		}else if ($cambiarRadiador.src.match("imagesUserInterface/foco50.jpg") && sliderRad.value >25 && sliderRad.value <=50){
+			$cambiarRadiador.src = "imagesUserInterface/foco50.jpg"
+		}else if ($cambiarRadiador.src.match("imagesUserInterface/foco50.jpg") && sliderRad.value ==0){
+			$cambiarRadiador.src = "imagesUserInterface/foco0.jpg"
+		}else if ($cambiarRadiador.src.match("imagesUserInterface/foco50.jpg") && sliderRad.value >0 && sliderRad.value <=25){
+			$cambiarRadiador.src = "imagesUserInterface/foco25.jpg"
+		}else if ($cambiarRadiador.src.match("imagesUserInterface/foco50.jpg") && sliderRad.value >50 && sliderRad.value <=75){
+			$cambiarRadiador.src = "imagesUserInterface/foco75.jpg"
+		}else if ($cambiarRadiador.src.match("imagesUserInterface/foco50.jpg") && sliderRad.value >75 && sliderRad.value <=100){
+			$cambiarRadiador.src = "imagesUserInterface/foco100.jpg"
+		}else if ($cambiarRadiador.src.match("imagesUserInterface/foco75.jpg") && sliderRad.value >50 && sliderRad.value <=75){
+			$cambiarRadiador.src = "imagesUserInterface/foco75.jpg"
+		}else if ($cambiarRadiador.src.match("imagesUserInterface/foco75.jpg") && sliderRad.value ==0){
+			$cambiarRadiador.src = "imagesUserInterface/foco0.jpg"
+		}else if ($cambiarRadiador.src.match("imagesUserInterface/foco75.jpg") && sliderRad.value >0 && sliderRad.value <=25){
+			$cambiarRadiador.src = "imagesUserInterface/foco25.jpg"
+		}else if ($cambiarRadiador.src.match("imagesUserInterface/foco75.jpg") && sliderRad.value >25 && sliderRad.value <=50){
+			$cambiarRadiador.src = "imagesUserInterface/foco50.jpg"
+		}else if ($cambiarRadiador.src.match("imagesUserInterface/foco75.jpg") && sliderRad.value >75 && sliderRad.value <=100){
+			$cambiarRadiador.src = "imagesUserInterface/foco100.jpg"
+		}else if ($cambiarRadiador.src.match("imagesUserInterface/foco100.jpg") && sliderRad.value >75 && sliderRad.value <=100){
+			$cambiarRadiador.src = "imagesUserInterface/foco100.jpg"
+		}else if ($cambiarRadiador.src.match("imagesUserInterface/foco100.jpg") && sliderRad.value ==0){
+			$cambiarRadiador.src = "imagesUserInterface/foco0.jpg"
+		}else if ($cambiarRadiador.src.match("imagesUserInterface/foco100.jpg") && sliderRad.value >0 && sliderRad.value <=25){
+			$cambiarRadiador.src = "imagesUserInterface/foco25.jpg"
+		}else if ($cambiarRadiador.src.match("imagesUserInterface/foco100.jpg") && sliderRad.value >25 && sliderRad.value <=50){
+			$cambiarRadiador.src = "imagesUserInterface/foco50.jpg"
+		}else if ($cambiarRadiador.src.match("imagesUserInterface/foco100.jpg") && sliderRad.value >50 && sliderRad.value <=75){
+			$cambiarRadiador.src = "imagesUserInterface/foco75.jpg"
+		}
+	}
+	$botonRadia.addEventListener("click",cambiarRADIADOR1)
+
+
+	//Maniplacion del slider del ventilador---------------------------------------
+	var sliderVent = document.getElementById("ventilador_input");
+	var outputVent = document.getElementById("value_ventilador");
+
+	outputVent.innerHTML = sliderVent.value;
+
+	sliderVent.oninput = function temp(){
+		outputVent.innerHTML = this.value;
+	}
+
+	//Boton Ventilador-----------------------------------------------------------
+	const $cambiarVentilador = document.getElementById("cambiarVentilador"),
+		  $botonVentila = document.querySelector(".botonVentila");
+		 
+	function cambiarVENTILADOR1(){
+		if ($cambiarVentilador.src.match("imagesUserInterface/ventiladorOFF.jpg") && sliderVent.value ==0){
+			$cambiarVentilador.src = "imagesUserInterface/ventiladorOFF.jpg"
+		}else if ($cambiarVentilador.src.match("imagesUserInterface/ventiladorOFF.jpg") && sliderVent.value >0 && sliderVent.value <=100){
+			$cambiarVentilador.src = "imagesUserInterface/ventiladorON.jpg"
+		}else if ($cambiarVentilador.src.match("imagesUserInterface/ventiladorON.jpg") && sliderVent.value >0 && sliderVent.value <=100){
+			$cambiarVentilador.src = "imagesUserInterface/ventiladorON.jpg"
+		}else if ($cambiarVentilador.src.match("imagesUserInterface/ventiladorON.jpg") && sliderVent.value ==0){
+			$cambiarVentilador.src = "imagesUserInterface/ventiladorOFF.jpg"
+		}
+	}
+	$botonVentila.addEventListener("click",cambiarVENTILADOR1)
+
+	//Contador--------------------------------------------------------------------
+	function cuentaReg(){
+		var ciclos = document.getElementById("ciclosNum").value;
+		var timeLeft = 120 * ciclos;
+		var timeLeft2 = ((timeLeft/120)*2)-1;
+
+		var elem = document.getElementById("reloj");
+		var timerId = setInterval(countdown, 1000);
+		var seg = 59;
+
+		function countdown() {	
+	  		if (timeLeft == 0) {
+			    elem.innerHTML = 'Finalizado';
+			    while(apagarIrrTem){
+			    	apagarIrrTem = false ;
+			    	document.getElementById('historialArea').innerHTML += 'CICLO: Apagando irrigaci\u00F3n...'+'\n';
+					enviaDatos('ONOFFIrrig','OFF','IRRIGACION');
+					enviaDatos('TEMP',document.getElementById('temp_input').value,'TEMPERATURA');
+			    }
+				
+	  		} else {
+	  			reloj = 1;
+    			elem.innerHTML = timeLeft2 + ":" + seg + ' --- Tiempo restante';
+	    		seg--;
+	    		timeLeft--;
+	    		if (seg == -1){
+	    			seg = 59;
+	    			timeLeft2 = timeLeft2 - 1;
+	    		}
+			}
+		}
+			document.getElementById('historialArea').innerHTML += 'CICLO: Irrigaci\u00F3n encendida...'+'\n';
+			enviaDatos('ONOFFIrrig','ON','IRRIGACION');
+			enviaDatos('TEMP',document.getElementById('temp_input').value,'TEMPERATURA');
+			
+	}
+	//Funcion para el historial---------------------------------------------------
+	function enviaHistorial(valor, funcion){
+		document.getElementById('historialArea').innerHTML+= '\n' + funcion +'&nbsp'+valor+'\n';
+
+	
+	}
+	//Funcion para obtener datos--------------------------------------------------
+	function enviaDatos(evento, valor, funcion){
+		enviaHistorial(valor, funcion);
+
+		if(funcion == 'IRRIGACION'){
+			if(valor == 'ON' || valor == 'OFF'){
+				submit(funcion,valor);
+				GraficaIrri(valor);
+			}
+		}
+
+		if(funcion == 'TEMPERATURA'){
+			submit(funcion,valor);
+			checaTemp(funcion, valor);
+			GraficaTemp(valor);
+		}
+
+		if(funcion == 'RADIADOR'){
+			submit(funcion,valor);
+			GraficaRad(valor);
+		}
+
+		if(funcion == 'VENTILADOR'){
+			submit(funcion,valor);
+			GraficaVent(valor);
+		}
+		
+	}
+
+	//Grafica Irrigacion-------------------------------------------------------------
+	
+	etiquetasIrri = ["0"]
+	datosIrri  = [0]
+	var etiqueta = 0;
+	
+	function GraficaIrri(valor){
+		const $grafica_irrigacion = document.querySelector("#grafica_irrigacion");
+		if (valor == 'ON'){
+			datosIrri.push(100);
+			etiqueta = etiqueta +1;
+		}
+		else{
+			datosIrri.push(0);
+			etiqueta = etiqueta +1;
+		}
+		etiquetasIrri.push(etiqueta)
+
+		const DATOSIrrigacion = {
+			label: "Irrigacion ",
+			data: datosIrri,
+			backgroundColor:'rgba(4, 120, 6, 0.5)', //Color de fondo
+			borderColor: 'rgba(4, 120, 6, 0.5)', //Color borde
+			borderWidth: 1, //Ancho del borde
+		};
+		new Chart($grafica_irrigacion, {
+			type: 'bar', //Tipo de grafica
+			data: {
+				labels: etiquetasIrri,
+				datasets: [
+					DATOSIrrigacion,
+
+				]
+			},
+			options: {
+				scales: {
+					yAxes: [{
+						ticks: {
+							beginAtZero: true
+						
+						}
+					}],
+				},
+			}
+		});
+	}
+	
+
+	//Grafica Temperatura-------------------------------------------------------------
+	etiquetasTemp = ["0"]
+	datosTemp  = [0]
+	var etiqueta2 = 0;
+	function GraficaTemp(valor){
+		const $grafica_temperatura = document.querySelector("#grafica_temperatura");
+		if (valor => 0){
+			datosTemp.push(valor);
+			etiqueta2 = etiqueta2 +1;
+		}
+		etiquetasTemp.push(etiqueta2)
+
+		const DATOSTemperatura = {
+			label: "Temperatura ",
+			data: datosTemp,
+			backgroundColor:'rgba(4, 120, 6, 1)', //Color de fondo
+			borderColor: 'rgba(4, 120, 6, 1)', //Color borde
+			borderWidth: 1, //Ancho del borde
+		};
+		new Chart($grafica_temperatura, {
+			type: 'line', //Tipo de grafica
+			data: {
+				labels: etiquetasTemp,
+				datasets: [
+					DATOSTemperatura,
+
+				]
+			},
+			options: {
+				scales: {
+					yAxes: [{
+						ticks: {
+							beginAtZero: true
+						
+						}
+					}],
+				},
+			}
+		});
+	}
+
+
+	//Grafica Radiador-------------------------------------------------------------
+	
+	etiquetasRad = ["0"]
+	datosRad  = [0]
+	var etiqueta3 = 0;
+	function GraficaRad(valor){
+		const $grafica_radiador = document.querySelector("#grafica_radiador");
+		if (valor => 0){
+			datosRad.push(valor);
+			etiqueta3 = etiqueta3 +1;
+		}
+		etiquetasRad.push(etiqueta3)
+
+		const DATOSRadiador = {
+			label: "Radiador ",
+			data: datosRad,
+			backgroundColor:'rgba(4, 120, 6, 1)', //Color de fondo
+			borderColor: 'rgba(4, 120, 6, 1)', //Color borde
+			borderWidth: 1, //Ancho del borde
+		};
+		new Chart($grafica_radiador, {
+			type: 'line', //Tipo de grafica
+			data: {
+				labels: etiquetasRad,
+				datasets: [
+					DATOSRadiador,
+
+				]
+			},
+			options: {
+				scales: {
+					yAxes: [{
+						ticks: {
+							beginAtZero: true
+						
+						}
+					}],
+				},
+			}
+		});
+	}
+
+
+	//Grafica Ventilador-------------------------------------------------------------
+	
+	etiquetasVent = ["0"]
+	datosVent  = [0]
+	var etiqueta4 = 0;
+	function GraficaVent(valor){
+		const $grafica_ventilador = document.querySelector("#grafica_ventilador");
+		if (valor => 0){
+			datosVent.push(valor);
+			etiqueta4 = etiqueta4 +1;
+		}
+		etiquetasVent.push(etiqueta4)
+
+		const DATOSVentilador = {
+			label: "Ventilador ",
+			data: datosVent,
+			backgroundColor:'rgba(4, 120, 6, 1)', //Color de fondo
+			borderColor: 'rgba(4, 120, 6, 1)', //Color borde
+			borderWidth: 1, //Ancho del borde
+		};
+		new Chart($grafica_ventilador, {
+			type: 'line', //Tipo de grafica
+			data: {
+				labels: etiquetasVent,
+				datasets: [
+					DATOSVentilador,
+
+				]
+			},
+			options: {
+				scales: {
+					yAxes: [{
+						ticks: {
+							beginAtZero: true
+						
+						}
+					}],
+				},
+			}
+		});
+	}
+	
+
+	//Funciones para enviar a websrvr.py------------------------------------------
+	function deactivateAll(){
+	var buttons = document.getElementsByTagName('button');
+	for(button in buttons)
+		button.classList.remove("on")
+	}
+
+	function activate(sender){
+		if(sender == null)
+		return;
+		sender.classList.add("on");
+	}
+
+	
+	function handle(sender, action, value){
+		submit(action, value);
+	}
+
+
+	function checaTemp(funcion, valor){
+		//Funcion para activar el radiador o el ventilador según la temperatura
+		if(funcion == 'TEMPERATURA'){
+			if(valor < 15){
+				//Activar el radiador
+				document.getElementById('historialArea').innerHTML+= '\n' + 'La temperatura est\u00E1 muy baja'+'\n'+'Activando radiador y apagando ventilador...'+'\n';
+				submit('RADIADOR','25');
+				enviaHistorial('25','RADIADOR');
+				submit('VENTILADOR','0');
+				enviaHistorial('0','VENTILADOR');
+			} else 
+			if(valor > 25){
+				//Activar el ventilador
+				document.getElementById('historialArea').innerHTML+= '\n' + 'La temperatura est\u00E1 muy alta'+'\n'+'Activando ventilador y apagando radiador...'+'\n';
+				submit('RADIADOR','0');
+				enviaHistorial('0','RADIADOR');
+				submit('VENTILADOR','25');
+				enviaHistorial('25','VENTILADOR');
+			} else {
+				//enviaHistorial(valor,funcion);
+				submit(funcion, valor);
+			}
+		}
+	}
+
+	function submit(action, value){
+		var xhr = new XMLHttpRequest();
+		xhr.open("POST", window.location.href, true);
+		xhr.setRequestHeader('Content-Type', 'application/json');
+		xhr.send(JSON.stringify({
+			'action' : action,
+			'value' :  value,
+		}));
+}
+//-->
+	
+</script>

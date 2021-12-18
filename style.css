@@ -1,0 +1,183 @@
+{
+	margin: 0;
+	box-sizing: border-box;
+}
+body{
+	font-family: sans-serif;
+	padding: 90px 20px 0;
+}
+/*Cabecera principal*/
+.header{ 
+	background-color: #008000; /*Fondo color verde*/
+	height: 80px;
+	position: fixed; /*Posicion fija*/
+	width: 100%;
+	top: 0;
+	left: 0; 
+}
+/*Contenido de la barra*/
+.container{ 
+	display: flex;
+	justify-content: space-between; /*Espacio entre "Invernadero" y "Control"*/
+	max-width: 992px;
+	margin: 0 auto; /*Se centran palabras*/
+}
+
+/*Palabra Invernadero*/
+.logo{
+	font-size: 30px;
+	font-weight: bold;
+	padding: 0 20px;
+	line-height: 80px;
+	color: white;
+	text-decoration: none;
+}
+
+.nav{
+	display: flex;
+	margin-left: 40px;
+	list-style: none;
+}
+
+.nav-menu{
+	font-size: 18px;
+	margin: 0 10px;
+	line-height: 80px;
+	text-transform: uppercase;
+	width: max-content;
+}
+
+/*Palabra Control*/
+.nav-menu-item{
+	padding: 8px 8px;
+	border-radius: 3px;
+	color: white;
+	text-decoration: none;
+}
+/*Sombreado de Control*/
+.nav-menu-item:hover{
+	background-color: #006400;
+	transition: 0.5s;
+}
+		
+.main{		
+	padding-top: 40px;
+}
+
+.contenido{
+	display: grid;
+	grid-template-columns: 50% 50%;
+	gap: 1em;
+		
+}
+
+.contenido div{
+	background-color: gray;
+	padding: 1em;
+}
+
+.contenido textarea{
+	width: 100%;
+	height: 100%;
+}
+
+.h1{
+	text-align: center;
+	font-size: 20px;
+	font-weight: bold;
+	line-height: 80px;
+	color: white;
+	text-decoration: none;
+}
+
+.h2{
+	text-align: center;
+	font-size: 20px;
+	font-weight: bold;
+	line-height: 80px;
+	color: white;
+	text-decoration: none;
+}
+
+.boton{
+	font-size: 15px;
+	text-align: center;
+	padding: 10px 10px;
+	width: 70px;				
+	border: 1px solid;
+	border-radius: 12px;
+	transition-duration: 0.3s;
+		
+}
+.boton:hover{
+	background-color: #7C7E7C;
+}	
+
+.slide-control{
+	width: 100%;
+
+}
+.slider{
+	width: 100%;
+	border-radius: 12px;
+}
+.slider: hover{
+	opacity: 1;
+}
+			
+.p{
+	font-size: 20px;
+	font-weight: bold;
+	margin-top: 50px;
+	opacity: 0.7;
+	color: white;
+}
+
+.cicloIN{
+	height: 30%;
+	width: 30%;
+}
+
+.irrigacion{
+	min-width: 25%;
+}
+.irrigacion img{
+	height: 40%;
+	width: 40%;
+	display: block;
+	margin: 0 auto;
+	border-radius: 12px;
+}
+
+.temperatura{
+	min-width: 50%;
+}
+.temperatura img{
+	height: 40%;
+	width: 40%;
+	display: block;
+	margin: 0 auto;
+	border-radius: 12px;
+}
+
+.radiador{
+	min-width: 50%;
+}
+.radiador img{
+	height: 40%;
+	width: 40%;
+	display: block;
+	margin: 0 auto;
+	border-radius: 12px;
+}
+
+.ventilador{
+	min-width: 50%;
+}
+.ventilador img{
+	height: 40%;
+	width: 40%;
+	display: block;
+	margin: 0 auto;
+	border-radius: 12px;
+}
